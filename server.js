@@ -6,6 +6,7 @@ const path = require("node:path");
 const { URL } = require("node:url");
 
 const PORT = Number(process.env.PORT || 4173);
+const HOST = process.env.HOST || "0.0.0.0";
 const PUBLIC_DIR = path.join(__dirname, "public");
 const MAX_BODY_SIZE = 8 * 1024 * 1024;
 
@@ -404,6 +405,6 @@ const server = http.createServer((req, res) => {
   sendJson(res, 405, { error: "Method not allowed" });
 });
 
-server.listen(PORT, () => {
-  console.log(`Mini Postman is running at http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`Mini Postman is running at http://${HOST}:${PORT}`);
 });
