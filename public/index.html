@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mini Postman</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">MP</span>
+          <div>
+            <h1>Mini Postman</h1>
+            <p>curl, Bearer token, JSON</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <span id="tokenState" class="status-pill muted">token empty</span>
+          <button id="clearAllButton" class="ghost-button" type="button">Clear</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="left-panel">
+          <section class="panel curl-panel">
+            <div class="panel-heading">
+              <h2>curl</h2>
+              <div class="panel-actions">
+                <button id="toggleCurlButton" class="ghost-button compact-button" type="button">Expand</button>
+                <button id="parseButton" class="ghost-button compact-button" type="button">Parse</button>
+              </div>
+            </div>
+            <textarea id="curlInput" spellcheck="false" placeholder="curl 'https://example.com/api' -H 'authorization: Bearer ...' --data-raw '{...}'"></textarea>
+          </section>
+
+          <section class="panel history-panel">
+            <div class="panel-heading">
+              <h2>History</h2>
+              <button id="clearHistoryButton" class="ghost-button" type="button">Clear</button>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </section>
+        </aside>
+
+        <section class="center-panel">
+          <div class="request-line">
+            <select id="methodSelect" aria-label="HTTP method">
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>PATCH</option>
+              <option>DELETE</option>
+              <option>HEAD</option>
+              <option>OPTIONS</option>
+            </select>
+            <input id="urlInput" type="url" spellcheck="false" placeholder="https://api.example.com/resource">
+            <button id="copyCurlButton" class="ghost-button" type="button">cURL</button>
+            <button id="sendButton" class="primary-button" type="button">
+              <span class="send-icon">&gt;</span>
+              Send
+            </button>
+          </div>
+
+          <div class="token-row">
+            <label>Token</label>
+            <div class="auto-token-copy">Auto from Keycloak: KIS / postman</div>
+            <label class="checkbox-label">
+              <input id="ignoreTlsInput" type="checkbox">
+              <span>Ignore TLS</span>
+            </label>
+          </div>
+
+          <section class="panel response-panel">
+            <div class="response-toolbar">
+              <div class="response-meta">
+                <span id="responseStatus" class="status-pill muted">idle</span>
+                <span id="responseTime" class="meta-text">0 ms</span>
+                <span id="responseSize" class="meta-text">0 B</span>
+                <span id="responseSummary" class="meta-text">ready</span>
+              </div>
+              <div class="response-tools">
+                <input id="responseSearchInput" class="response-search" type="search" spellcheck="false" placeholder="Search">
+                <button id="toggleWrapButton" class="ghost-button compact-button" type="button">Wrap</button>
+                <button id="copyResponseButton" class="ghost-button compact-button" type="button">Copy</button>
+                <button id="downloadResponseButton" class="ghost-button compact-button" type="button">Save</button>
+              </div>
+              <div class="tabs" role="tablist">
+                <button class="tab active" data-response-tab="json" type="button">JSON</button>
+                <button class="tab" data-response-tab="table" type="button">Table</button>
+                <button class="tab" data-response-tab="raw" type="button">Raw</button>
+                <button class="tab" data-response-tab="headers" type="button">Headers</button>
+              </div>
+            </div>
+            <pre id="responseOutput" class="response-output">Ready.</pre>
+          </section>
+        </section>
+
+        <aside class="right-panel">
+          <div class="editor-grid">
+            <section class="panel params-panel">
+              <div class="panel-heading">
+                <h2>Params</h2>
+                <button id="addParamButton" class="ghost-button" type="button">Add</button>
+              </div>
+              <div id="paramsTable" class="params-table"></div>
+            </section>
+
+            <section class="panel headers-panel">
+              <div class="panel-heading">
+                <h2>Headers</h2>
+                <button id="addHeaderButton" class="ghost-button" type="button">Add</button>
+              </div>
+              <div id="headersTable" class="headers-table"></div>
+            </section>
+
+            <section class="panel body-panel">
+              <div class="panel-heading">
+                <h2>Body</h2>
+                <div class="panel-actions">
+                  <span id="bodyState" class="mini-state muted">empty</span>
+                  <button id="minifyBodyButton" class="ghost-button compact-button" type="button">Minify</button>
+                  <button id="formatBodyButton" class="ghost-button compact-button" type="button">Format</button>
+                </div>
+              </div>
+              <textarea id="bodyInput" spellcheck="false" placeholder='{"key":"value"}'></textarea>
+            </section>
+
+            <section class="panel checks-panel">
+              <div class="panel-heading">
+                <h2>Checks</h2>
+                <button id="runChecksButton" class="ghost-button compact-button" type="button">Run</button>
+              </div>
+              <div class="checks-content">
+                <label class="check-field">
+                  <span>Status</span>
+                  <input id="expectedStatusInput" type="text" inputmode="numeric" placeholder="200">
+                </label>
+                <label class="check-field">
+                  <span>Contains</span>
+                  <input id="containsInput" type="text" spellcheck="false" placeholder="id">
+                </label>
+                <label class="check-field wide">
+                  <span>JSON path</span>
+                  <input id="jsonPathInput" type="text" spellcheck="false" placeholder="content[0].id">
+                </label>
+                <div id="checksResult" class="checks-result">No checks yet</div>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "mini-postman",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small local API client with curl import and automatic Bearer token injection.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
