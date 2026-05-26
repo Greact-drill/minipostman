@@ -15,6 +15,11 @@ services:
       LKDS_CLIENT_ID: ${LKDS_CLIENT_ID:-postman}
       LKDS_CLIENT_SECRET: ${LKDS_CLIENT_SECRET:-l41I5Xtlos4EuhVOsD0stIR0upZYlDB0}
       LKDS_SCOPE: ${LKDS_SCOPE:-}
+    extra_hosts:
+      # LKDS domains resolve to an internal address. Prefer corporate DNS/VPN on the host;
+      # this pin only removes Docker DNS ENOTFOUND when the route to 10.50.43.3 exists.
+      - "sso.lkds.alabuga.ru:10.50.43.3"
+      - "dev.lkds.alabuga.ru:10.50.43.3"
     ports:
       # Nginx Proxy Manager can proxy to http://<docker-host-ip>:4173.
       - "4173:4173"
