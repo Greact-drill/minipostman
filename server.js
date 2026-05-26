@@ -386,6 +386,11 @@ async function serveStatic(req, res) {
 }
 
 const server = http.createServer((req, res) => {
+  if (req.method === "GET" && req.url === "/healthz") {
+    sendJson(res, 200, { ok: true, service: "mini-postman" });
+    return;
+  }
+
   if (req.method === "POST" && req.url === "/api/send") {
     handleSend(req, res);
     return;

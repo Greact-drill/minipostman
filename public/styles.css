@@ -14,7 +14,8 @@
   --warn: #b85c1f;
   --danger: #b53737;
   --ok: #237a45;
-  --shadow: 0 18px 45px rgba(22, 33, 30, 0.12);
+  --shadow: 0 14px 34px rgba(22, 33, 30, 0.10);
+  --shadow-soft: 0 7px 18px rgba(22, 33, 30, 0.08);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -53,10 +54,13 @@ button {
 }
 
 .app-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
   width: min(1680px, 100%);
   height: 100vh;
   margin: 0 auto;
-  padding: 18px;
+  padding: 16px;
   overflow: hidden;
 }
 
@@ -65,7 +69,13 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 14px;
+  min-height: 66px;
+  padding: 10px 12px;
+  border: 1px solid rgba(217, 226, 222, 0.9);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
 }
 
 .brand {
@@ -84,6 +94,7 @@ button {
   color: white;
   font-weight: 800;
   letter-spacing: 0;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 9px 18px rgba(5, 97, 94, 0.22);
 }
 
 .brand h1 {
@@ -109,7 +120,7 @@ button {
   grid-template-columns: 300px minmax(430px, 1fr) 400px;
   gap: 14px;
   align-items: stretch;
-  height: calc(100vh - 92px);
+  height: 100%;
   min-height: 0;
 }
 
@@ -145,8 +156,8 @@ button {
 .panel {
   min-width: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid rgba(217, 226, 222, 0.95);
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow);
@@ -160,7 +171,7 @@ button {
   min-height: 48px;
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
-  background: var(--surface-soft);
+  background: linear-gradient(180deg, #fbfdfc, var(--surface-soft));
 }
 
 .panel-heading h2 {
@@ -242,6 +253,11 @@ textarea {
   grid-template-columns: 112px minmax(0, 1fr) 76px 132px;
   gap: 8px;
   align-items: center;
+  padding: 10px;
+  border: 1px solid rgba(217, 226, 222, 0.95);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-soft);
 }
 
 .request-line select,
@@ -280,8 +296,9 @@ textarea {
 .primary-button {
   height: 44px;
   border-color: var(--accent);
-  background: var(--accent);
+  background: linear-gradient(180deg, #0b918c, var(--accent));
   color: white;
+  box-shadow: 0 10px 20px rgba(8, 127, 123, 0.22);
 }
 
 .primary-button:hover {
@@ -297,6 +314,7 @@ textarea {
   min-width: 68px;
   padding: 0 11px;
   font-size: 13px;
+  box-shadow: 0 2px 4px rgba(22, 33, 30, 0.04);
 }
 
 .compact-button {
@@ -328,10 +346,10 @@ textarea {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid rgba(217, 226, 222, 0.95);
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.86);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft);
 }
 
 .token-row label {
@@ -555,7 +573,7 @@ textarea {
   margin: 0;
   overflow: auto;
   padding: 14px;
-  background: #101816;
+  background: linear-gradient(180deg, #101816, #0b1211);
   color: #d6f2ea;
   font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
   font-size: 13px;
@@ -718,9 +736,16 @@ textarea {
   margin-bottom: 8px;
   padding: 8px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 7px;
   background: white;
   text-align: left;
+  transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+.history-item:hover {
+  border-color: #b8c7c1;
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-1px);
 }
 
 .history-method {
